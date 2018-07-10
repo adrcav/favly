@@ -14,7 +14,8 @@ export class FeedComponent implements OnInit {
       author: {
         name: 'Fulano',
         avatar: 'https://semantic-ui.com/images/avatar/small/jenny.jpg'
-      }
+      },
+      likes: 2
     },
     {
       name: 'repo-2',
@@ -22,7 +23,8 @@ export class FeedComponent implements OnInit {
       author: {
         name: 'Nome',
         avatar: 'https://semantic-ui.com/images/avatar/small/jenny.jpg'
-      }
+      },
+      likes: 1
     },
     {
       name: 'repo-3',
@@ -30,13 +32,18 @@ export class FeedComponent implements OnInit {
       author: {
         name: 'Sicrano',
         avatar: 'https://semantic-ui.com/images/avatar/small/jenny.jpg'
-      }
+      },
+      likes: 5
     }
   ];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  handleLikedRepoFromChildComponent(repo) {
+    repo.likes++;
   }
 
 }
