@@ -1,0 +1,37 @@
+<div class="ui container segment">
+
+  <h2 class="ui header">
+    <i class="github icon"></i>
+    <div class="content">
+      Repositórios
+      <div class="sub header">Lista dos repositórios preferidos</div>
+    </div>
+  </h2>
+
+  <div class="ui error message" *ngIf="!repos || !repos.length">
+    <div class="header">Sem conteúdo</div>
+    <p>Infelizmente não há nenhum dado cadastrado.</p>
+  </div>
+
+  <div class="ui grid">
+    <div class="ui four column row">
+      <div class="column" *ngFor="let repo of repos">
+        <div class="ui card">
+          <div class="content">
+            <i class="right floated like icon"></i>
+            <div class="header">{{ repo.name }}</div>
+            <div class="description">
+              <p>{{ repo.description }}</p>
+            </div>
+          </div>
+          <div class="extra content">
+            <div class="right floated author">
+              <img class="ui avatar image" src="{{ repo.author.avatar }}"> {{ repo.author.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
