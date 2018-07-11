@@ -1,0 +1,35 @@
+{
+  "repos": [
+    {
+      "id": 1,
+      "name": "repo-1",
+      "description": "Simple repo test.",
+      "owner": {
+        "login": "fulano",
+        "avatar_url": "https://semantic-ui.com/images/avatar/small/jenny.jpg"
+      },
+      "stargazers_count": 18
+    },
+    {
+      "id": 2,
+      "name": "repo-2",
+      "description": "Simple repo test.",
+      "owner": {
+        "login": "sicrano",
+        "avatar_url": "https://semantic-ui.com/images/avatar/small/jenny.jpg"
+      },
+      "stargazers_count": 10,
+      "likes": null
+    },
+    {
+      "id": 3,
+      "name": "repo-3",
+      "description": "Simple repo test.",
+      "owner": {
+        "login": "teste",
+        "avatar_url": "https://semantic-ui.com/images/avatar/small/jenny.jpg"
+      },
+      "stargazers_count": 31
+    }
+  ]
+}

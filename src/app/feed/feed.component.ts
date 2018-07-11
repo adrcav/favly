@@ -1,49 +1,43 @@
 import { Component, OnInit } from '@angular/core';
+import { FeedService } from '../feed.service';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.css']
+  styleUrls: ['./feed.component.css'],
+  providers: [
+    FeedService,
+    SearchService
+  ]
 })
 export class FeedComponent implements OnInit {
 
-  repos = [
-    {
-      name: 'repo-1',
-      description: 'Simple repo test.',
-      author: {
-        name: 'Fulano',
-        avatar: 'https://semantic-ui.com/images/avatar/small/jenny.jpg'
-      },
-      likes: 2
-    },
-    {
-      name: 'repo-2',
-      description: 'Simple repo test.',
-      author: {
-        name: 'Nome',
-        avatar: 'https://semantic-ui.com/images/avatar/small/jenny.jpg'
-      },
-      likes: 1
-    },
-    {
-      name: 'repo-3',
-      description: 'Simple repo test.',
-      author: {
-        name: 'Sicrano',
-        avatar: 'https://semantic-ui.com/images/avatar/small/jenny.jpg'
-      },
-      likes: 5
-    }
-  ];
+  repos;
+  randomRepos = [];
 
-  constructor() { }
+  constructor(private feedService: FeedService, private searchService: SearchService) { }
 
   ngOnInit() {
+    this.feedService.getRepos().subscribe(data => {
+      this.repos = data.json();
+    });
+
+    this.updateSearch();
+  }
+
+  updateSearch() {
+    this.searchService.searchRepo().subscribe(data => {
+      this.randomRepos = data.json().items;
+      console.log(this.randomRepos);
+    });
   }
 
   handleLikedRepoFromChildComponent(repo) {
     repo.likes++;
+    this.feedService.likeRepo(repo).subscribe(data => {
+      console.log(data.json());
+    })
   }
 
 }
