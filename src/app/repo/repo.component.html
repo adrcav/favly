@@ -1,7 +1,7 @@
-<div class="ui card">
+<div class="ui fluid card">
   <div class="content">
     <i class="right floated like icon" (click)="likedRepo(repo)"></i>
-    <div class="header">{{ repo.name }}</div>
+    <a href="{{ repo.html_url }}" target="_blank" class="header">{{ repo.name }}</a>
     <div class="description">
       <p>{{ repo.description }}</p>
     </div>

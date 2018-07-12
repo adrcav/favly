@@ -8,14 +8,14 @@
     </div>
   </h2>
 
-  <div class="ui error message" *ngIf="!repos || !repos.length">
+  <div class="ui error message" *ngIf="!favoriteRepos || !favoriteRepos.length">
     <div class="header">Sem conteúdo</div>
     <p>Infelizmente não há nenhum dado cadastrado.</p>
   </div>
 
   <div class="ui grid">
     <div class="ui four column row">
-      <div class="four wide column" *ngFor="let currentRepo of repos">
+      <div class="four wide column" *ngFor="let currentRepo of favoriteRepos">
         <app-repo [repo]="currentRepo" (likedRepoChild)="handleLikedRepoFromChildComponent($event)"></app-repo>
       </div>
     </div>
@@ -39,8 +39,8 @@
   </div>
 
   <div class="ui grid">
-    <div class="ui four column row">
-      <div class="four wide column" *ngFor="let currentRepo of randomRepos">
+    <div class="ui three column doubling stackable relaxed masonry grid">
+      <div class="column" *ngFor="let currentRepo of randomRepos">
         <app-repo [repo]="currentRepo" (likedRepoChild)="handleLikedRepoFromChildComponent($event)"></app-repo>
       </div>
     </div>

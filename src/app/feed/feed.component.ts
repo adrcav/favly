@@ -13,17 +13,27 @@ import { SearchService } from '../search.service';
 })
 export class FeedComponent implements OnInit {
 
-  repos;
+  favoriteIds = [];
+  favoriteRepos = [];
   randomRepos = [];
 
   constructor(private feedService: FeedService, private searchService: SearchService) { }
 
   ngOnInit() {
-    this.feedService.getRepos().subscribe(data => {
-      this.repos = data.json();
+    this.feedService.getIdRepos().subscribe(data => {
+      this.favoriteIds = data.json();
+      this.getFavoritesData(data.json());
     });
 
     this.updateSearch();
+  }
+
+  getFavoritesData(favorites) {
+    favorites.forEach(element => {
+      this.feedService.getFavoriteRepo(element.id).subscribe(data => {
+        this.favoriteRepos.push(data.json());
+      })
+    });
   }
 
   updateSearch() {

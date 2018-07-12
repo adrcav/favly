@@ -12,8 +12,12 @@ export class FeedService {
 
   constructor(private http: Http) { }
 
-  getRepos(): Observable<Response> {
+  getIdRepos(): Observable<Response> {
     return this.http.get(this.url);
+  }
+
+  getFavoriteRepo(id): Observable<Response> {
+    return this.http.get(`https://api.github.com/repositories/${id}`);
   }
 
   likeRepo(repo) {
