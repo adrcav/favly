@@ -1,2 +1,6 @@
-# learning-angular
-Simple project for learn and practice Angular. :relaxed:
+# Favly
+Save your GitHub repositories favorites of a random list with daily most popular repositories. :bookmark:
+
+## Built With
+- Angular 4
+- Semantic UI
