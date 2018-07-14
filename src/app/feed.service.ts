@@ -21,7 +21,11 @@ export class FeedService {
   }
 
   likeRepo(repo) {
-    return this.http.put(`${this.url}/${repo.id}`, repo);
+    return this.http.post(`${this.url}`, repo);
+  }
+
+  unlikeRepo(repoId) {
+    return this.http.delete(`${this.url}/${repoId}`);
   }
 
 

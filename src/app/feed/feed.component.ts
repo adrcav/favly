@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FeedService } from '../feed.service';
 import { SearchService } from '../search.service';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
@@ -20,20 +22,42 @@ export class FeedComponent implements OnInit {
   constructor(private feedService: FeedService, private searchService: SearchService) { }
 
   ngOnInit() {
-    this.feedService.getIdRepos().subscribe(data => {
-      this.favoriteIds = data.json();
-      this.getFavoritesData(data.json());
-    });
+    this.getFavoritesRepos();
 
     this.updateSearch();
   }
 
-  getFavoritesData(favorites) {
-    favorites.forEach(element => {
-      this.feedService.getFavoriteRepo(element.id).subscribe(data => {
-        this.favoriteRepos.push(data.json());
-      })
+  getFavoritesRepos() {
+    this.feedService.getIdRepos().subscribe(data => {
+      this.favoriteIds = data.json();
+      this.getFavoriteData(data.json());
     });
+  }
+
+  getFavoriteData(favorites) {
+    favorites.forEach(element => {
+      if (!this.checkIfIdExist(element.id)) {
+        this.feedService.getFavoriteRepo(element.id).subscribe(data => {
+          this.favoriteRepos.push(data.json());
+        });
+      }
+    });
+  }
+
+  checkIfIdExist(id) {
+    let res = this.favoriteRepos.filter(obj => {
+      return obj.id === id;
+    });
+
+    return Boolean(Number(res.length));
+  }
+
+  removeFavoriteRepo(id) {
+    let res = this.favoriteRepos.filter(el => {
+      return el.id != id;
+    });
+
+    this.favoriteRepos = res;
   }
 
   updateSearch() {
@@ -44,10 +68,21 @@ export class FeedComponent implements OnInit {
   }
 
   handleLikedRepoFromChildComponent(repo) {
-    repo.likes++;
-    this.feedService.likeRepo(repo).subscribe(data => {
-      console.log(data.json());
-    })
+    let data = {
+      id: repo.id,
+      adddedAt: moment().format()
+    };
+
+    if (this.checkIfIdExist(repo.id)) {
+      this.feedService.unlikeRepo(data.id).subscribe(data => {
+        this.removeFavoriteRepo(repo.id);
+      });
+    } else {
+      this.feedService.likeRepo(data).subscribe(data => {
+        this.getFavoritesRepos();
+      });
+    }
+
   }
 
 }
