@@ -1,6 +1,10 @@
 {
   "name": "favly",
   "version": "0.0.0",
+  "description": "Favorites GitHub repositories with Angular",
+  "author": "Adriel Cavalcanti",
+  "homepage": "https://github.com/adrcav/favly#readme",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +13,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^6.0.3",
     "@angular/common": "^6.0.3",

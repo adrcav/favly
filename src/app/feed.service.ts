@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 
 
@@ -8,24 +8,32 @@ import { Observable } from 'rxjs';
 })
 export class FeedService {
 
-  url = 'http://localhost:3000/repos';
+  url = 'https://favly.herokuapp.com';
 
   constructor(private http: Http) { }
 
-  getIdRepos(): Observable<Response> {
-    return this.http.get(this.url);
+  getUserId() {
+    return this.http.post(`${this.url}/user`, {});
+  }
+
+  getIdRepos(userId): Observable<Response> {
+    return this.http.get(`${this.url}/user/${userId}`);
   }
 
   getFavoriteRepo(id): Observable<Response> {
     return this.http.get(`https://api.github.com/repositories/${id}`);
   }
 
-  likeRepo(repo) {
-    return this.http.post(`${this.url}`, repo);
+  likeRepo(userId, repo) {
+    return this.http.post(`${this.url}/user/${userId}/addrepository`, repo);
   }
 
-  unlikeRepo(repoId) {
-    return this.http.delete(`${this.url}/${repoId}`);
+  unlikeRepo(userId, repoId) {
+    return this.http.delete(`${this.url}/user/${userId}/delrepository`, new RequestOptions({
+      body: {
+        repositoryId: repoId
+      }
+    }));
   }
 
 

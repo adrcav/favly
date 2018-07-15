@@ -15,6 +15,7 @@ import * as moment from 'moment';
 })
 export class FeedComponent implements OnInit {
 
+  userId = localStorage.getItem("user_id");
   favoriteIds = [];
   favoriteRepos = [];
   randomRepos = [];
@@ -22,15 +23,25 @@ export class FeedComponent implements OnInit {
   constructor(private feedService: FeedService, private searchService: SearchService) { }
 
   ngOnInit() {
-    this.getFavoritesRepos();
+    (!this.userId) ? this.getUserId() : this.getFavoritesRepos(this.userId);
 
     this.updateSearch();
   }
 
-  getFavoritesRepos() {
-    this.feedService.getIdRepos().subscribe(data => {
-      this.favoriteIds = data.json();
-      this.getFavoriteData(data.json());
+  getUserId() {
+    this.feedService.getUserId().subscribe(data => {
+      let res = data.json();
+      localStorage.setItem('user_id', res.data._id);
+      this.userId = res.data._id;
+      this.getFavoritesRepos(this.userId);
+    });
+  }
+
+  getFavoritesRepos(userId) {
+    this.feedService.getIdRepos(userId).subscribe(data => {
+      let res = data.json();
+      this.favoriteIds = res.user.repositories;
+      this.getFavoriteData(res.user.repositories);
     });
   }
 
@@ -63,23 +74,24 @@ export class FeedComponent implements OnInit {
   updateSearch() {
     this.searchService.searchRepo().subscribe(data => {
       this.randomRepos = data.json().items;
-      console.log(this.randomRepos);
     });
   }
 
   handleLikedRepoFromChildComponent(repo) {
     let data = {
-      id: repo.id,
-      adddedAt: moment().format()
+      repository: {
+        id: repo.id,
+        adddedAt: moment().format()
+      }
     };
 
     if (this.checkIfIdExist(repo.id)) {
-      this.feedService.unlikeRepo(data.id).subscribe(data => {
+      this.feedService.unlikeRepo(this.userId, repo.id).subscribe(data => {
         this.removeFavoriteRepo(repo.id);
       });
     } else {
-      this.feedService.likeRepo(data).subscribe(data => {
-        this.getFavoritesRepos();
+      this.feedService.likeRepo(this.userId, data).subscribe(data => {
+        this.getFavoritesRepos(this.userId);
       });
     }
 
