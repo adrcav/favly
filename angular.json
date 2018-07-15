@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "learning-angular": {
+    "favly": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/learning-angular",
+            "outputPath": "dist/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -52,18 +52,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "learning-angular:build"
+            "browserTarget": "favly:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "learning-angular:build:production"
+              "browserTarget": "favly:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "learning-angular:build"
+            "browserTarget": "favly:build"
           }
         },
         "test": {
@@ -97,7 +97,7 @@
         }
       }
     },
-    "learning-angular-e2e": {
+    "favly-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -105,11 +105,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "learning-angular:serve"
+            "devServerTarget": "favly:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "learning-angular:serve:production"
+              "devServerTarget": "favly:serve:production"
             }
           }
         },
@@ -125,5 +125,5 @@
       }
     }
   },
-  "defaultProject": "learning-angular"
+  "defaultProject": "favly"
 }
